@@ -16,7 +16,7 @@ const router = express.Router();
 router.get("/current", authMiddleware, getCurrentUser);
 router.get("/all", authMiddleware, adminAuthMiddleware, getAllUsers);
 router.get(
-  "/allStudents",
+  "/allStudentUsers",
   authMiddleware,
   tutorAuthMiddleware,
   getUsersWithStudentRole

@@ -28,9 +28,29 @@ export const getStudentInfo = async (req, res) => {
       data: student,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).json({
       message: "Unable to get student info, Please try again later",
+    });
+  }
+};
+
+export const getAllStudents = async (req, res) => {
+  try {
+    const students = await Student.find().populate([
+      { path: "user", select: "-password -token" },
+      { path: "tutors", select: "-password -token" },
+      "reviews",
+      "payments",
+      "lessons",
+      "feedbacks",
+    ]);
+
+    res.status(200).json({
+      data: students,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Unable to get all students info, Please try again later",
     });
   }
 };
