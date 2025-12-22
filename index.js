@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import connectDB from "./Database/dbConfig.js";
 import authRoutes from "./Routes/AuthRoutes.js";
 import userRoutes from "./Routes/UserRoutes.js";
@@ -14,6 +15,7 @@ connectDB();
 
 // Default middleware
 app.use(express.json());
+app.use(cors());
 
 // Default route for all backend
 app.get("/", (req, res) => {
