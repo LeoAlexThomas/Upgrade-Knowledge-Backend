@@ -49,66 +49,61 @@ export const loginUser = async (req, res) => {
 
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password, role, studentInfo, tutorInfo } = req.body;
+    const { name, email, password, role } = req.body;
 
+    // 1️⃣ Validate input
     if (!name || !email || !password || !role) {
-      res.status(400).json({
+      return res.status(400).json({
         message: "All fields are required",
       });
     }
 
+    // 2️⃣ Check existing user
     const oldUser = await User.findOne({ email });
     if (oldUser) {
-      res.status(400).json({
-        message: "This mail id is already exist. Please try to login",
+      return res.status(400).json({
+        message: "This email already exists. Please login",
       });
     }
-    const userId = new mongoose.Types.ObjectId();
-    let roleId = null;
 
-    if (role === "student") {
-      const student = new Student({
-        user: userId,
-      });
-      await student.save();
-      roleId = student._id;
-    } else if (role === "tutor") {
-      if (!tutorInfo) {
-        res.status(400).json({
-          message: "Tutor information is required",
-        });
-      }
-      const tutor = new Tutor({
-        user: userId,
-        ...tutorInfo,
-      });
-      await tutor.save();
-      roleId = tutor._id;
-    }
-
+    // 3️⃣ Hash password
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const newUser = new User({
-      _id: userId,
+    // 4️⃣ Create user
+    const newUser = await User.create({
       name,
       email,
       password: hashedPassword,
       role,
-      student: role === "student" ? roleId : null,
-      tutor: role === "tutor" ? roleId : null,
     });
 
+    // 5️⃣ Role-based profile creation
+    if (role === "student") {
+      const student = await Student.create({
+        user: newUser._id,
+      });
+      newUser.student = student._id;
+    }
+
+    if (role === "tutor") {
+      const tutor = await Tutor.create({
+        user: newUser._id,
+      });
+      newUser.tutor = tutor._id;
+    }
+
+    // 6️⃣ Save updated user
     await newUser.save();
 
-    res.status(200).json({
+    return res.status(201).json({
       message: "User registered successfully",
       data: {
         user: newUser,
       },
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Unable to process register new user, Please try again later",
+    return res.status(500).json({
+      message: "Unable to register user. Please try again later",
     });
   }
 };

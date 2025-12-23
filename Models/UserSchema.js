@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const UserSchema = mongoose.Schema({
-  _id: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
@@ -39,7 +35,7 @@ const UserSchema = mongoose.Schema({
   resetPin: {
     type: String,
   },
-  resetPinValidation: {
+  resetPinValidity: {
     type: Date,
   },
 });
