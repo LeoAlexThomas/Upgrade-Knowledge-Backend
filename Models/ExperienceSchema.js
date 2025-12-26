@@ -1,15 +1,20 @@
 import mongoose from "mongoose";
 
-const ExperienceSchema = mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
+const ExperienceSchema = mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    experienceInYear: {
+      type: Number,
+      required: true,
+    },
   },
-  experienceInYear: {
-    type: Number,
-    required: true,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const Experience = mongoose.model("Experience", ExperienceSchema);
 
