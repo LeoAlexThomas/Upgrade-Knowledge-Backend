@@ -5,6 +5,7 @@ import connectDB from "./Database/dbConfig.js";
 import authRoutes from "./Routes/AuthRoutes.js";
 import userRoutes from "./Routes/UserRoutes.js";
 import studentRoutes from "./Routes/StudentRoutes.js";
+import LessonRoutes from "./Routes/LessonRoutes.js";
 // Load environment variables from .env file
 dotenv.config();
 
@@ -30,6 +31,9 @@ app.use("/api/user", userRoutes);
 
 // Student route
 app.use("/api/student", studentRoutes);
+
+// Lesson route
+app.use("/api/lesson", LessonRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

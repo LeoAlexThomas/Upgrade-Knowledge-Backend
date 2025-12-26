@@ -9,9 +9,8 @@ const LessonSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  videoLink: {
+  meetLink: {
     type: String,
-    required: true,
   },
   tutor: {
     type: mongoose.Schema.Types.ObjectId,
@@ -21,19 +20,29 @@ const LessonSchema = mongoose.Schema({
   student: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Student",
-    required: true,
   },
   recordingLink: {
     type: String,
-    required: true,
   },
   isCompleted: {
     type: Boolean,
     default: false,
   },
+  price: {
+    type: Number,
+    required: true,
+  },
   isPaid: {
     type: Boolean,
     default: false,
+  },
+  sessionStartDate: {
+    type: String,
+    required: true,
+  },
+  sessionEndDate: {
+    type: String,
+    required: true,
   },
   payment: {
     type: mongoose.Schema.Types.ObjectId,
