@@ -18,27 +18,33 @@ const TutorSchema = mongoose.Schema(
       default: [],
     },
     availableSlots: {
-      type: [Date],
+      type: [
+        {
+          startDate: {
+            type: Date,
+            required: true,
+          },
+          endDate: {
+            type: Date,
+            required: true,
+          },
+        },
+      ],
       default: [],
+      required: true,
     },
     expertises: {
       type: [String],
       default: [],
       required: true,
     },
-    experiences: {
-      type: [mongoose.Schema.Types.ObjectId],
+    experience: {
+      type: Number,
       ref: "Experience",
-      default: [],
-      required: true,
     },
     payments: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "PaymentInfo",
-      default: [],
-    },
-    recordingLinks: {
-      type: [String],
       default: [],
     },
     reviews: {

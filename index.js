@@ -6,6 +6,7 @@ import authRoutes from "./Routes/AuthRoutes.js";
 import userRoutes from "./Routes/UserRoutes.js";
 import studentRoutes from "./Routes/StudentRoutes.js";
 import LessonRoutes from "./Routes/LessonRoutes.js";
+import tutorRoutes from "./Routes/TutorRoutes.js";
 // Load environment variables from .env file
 dotenv.config();
 
@@ -31,6 +32,9 @@ app.use("/api/user", userRoutes);
 
 // Student route
 app.use("/api/student", studentRoutes);
+
+// Tutor route
+app.use("/api/tutor", tutorRoutes);
 
 // Lesson route
 app.use("/api/lesson", LessonRoutes);

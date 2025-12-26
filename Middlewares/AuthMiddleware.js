@@ -14,11 +14,11 @@ export const authMiddleware = async (req, res, next) => {
     }
     token = token.split(" ")[1];
 
-    const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // removing password and token from user object and send to client
     const user = await User.findById(decoded.userId)
-      .populate("student", "tutor")
+      .populate(["student", "tutor"])
       .select("-password -token -resetPin -resetPinValidity");
 
     if (!user) {
