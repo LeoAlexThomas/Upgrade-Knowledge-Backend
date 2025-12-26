@@ -7,19 +7,19 @@ dotenv.config();
 export const authMiddleware = async (req, res, next) => {
   try {
     let token = req.headers.authorization;
-    token = token.split(" ")[1];
     if (!token) {
-      res.status(401).json({
+      res.status(400).json({
         message: "Token is missing",
       });
     }
+    token = token.split(" ")[1];
 
     const decoded = await jwt.verify(token, process.env.JWT_SECRET);
 
     // removing password and token from user object and send to client
     const user = await User.findById(decoded.userId)
       .populate("student", "tutor")
-      .select("-password -token");
+      .select("-password -token -resetPin -resetPinValidity");
 
     if (!user) {
       res.status(401).json({
@@ -32,7 +32,7 @@ export const authMiddleware = async (req, res, next) => {
     next();
   } catch (error) {
     res.status(500).json({
-      message: "Unable authorize the user",
+      message: `Unable authorize the user: ${error.message}`,
     });
   }
 };
