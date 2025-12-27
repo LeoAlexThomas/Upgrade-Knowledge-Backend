@@ -7,6 +7,8 @@ import userRoutes from "./Routes/UserRoutes.js";
 import studentRoutes from "./Routes/StudentRoutes.js";
 import LessonRoutes from "./Routes/LessonRoutes.js";
 import tutorRoutes from "./Routes/TutorRoutes.js";
+import ReviewRoutes from "./Routes/ReviewRoutes.js";
+import FeedbackRoutes from "./Routes/FeedbackRoutes.js";
 // Load environment variables from .env file
 dotenv.config();
 
@@ -38,6 +40,12 @@ app.use("/api/tutor", tutorRoutes);
 
 // Lesson route
 app.use("/api/lesson", LessonRoutes);
+
+// Review route
+app.use("/api/review", ReviewRoutes);
+
+// Feedback route
+app.use("/api/feedback", FeedbackRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

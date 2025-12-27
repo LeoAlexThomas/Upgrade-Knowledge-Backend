@@ -13,7 +13,7 @@ import {
 
 const router = express.Router();
 
-router.post("/addReview", authMiddleware, studentAuthMiddleware, addReview);
+router.post("/create", authMiddleware, studentAuthMiddleware, addReview);
 
 router.get(
   "/allReviewForTutor/:tutorId",
