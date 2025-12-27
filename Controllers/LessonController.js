@@ -17,7 +17,7 @@ export const createLesson = async (req, res) => {
       });
     }
 
-    const tutorId = req.user._id;
+    const tutorId = req.user.tutor._id;
 
     const newLesson = await Lesson.create({
       title,
@@ -58,7 +58,7 @@ export const getAllLessons = async (req, res) => {
 
 export const getLessonCreatedByTutor = async (req, res) => {
   try {
-    const lessons = await Lesson.find({ tutor: req.user._id }).populate([
+    const lessons = await Lesson.find({ tutor: req.user.tutor._id }).populate([
       "tutor",
       "student",
       "payment",
@@ -92,7 +92,7 @@ export const updateLesson = async (req, res) => {
     }
 
     const lessonId = req.params.lessonId;
-    const tutorId = req.user._id;
+    const tutorId = req.user.tutor._id;
 
     const lesson = await Lesson.findById(lessonId);
 
@@ -130,7 +130,7 @@ export const updateLesson = async (req, res) => {
 export const deleteLesson = async (req, res) => {
   try {
     const lessonId = req.params.lessonId;
-    const tutorId = req.user._id;
+    const tutorId = req.user.tutor._id;
 
     const lesson = await Lesson.findById(lessonId);
 

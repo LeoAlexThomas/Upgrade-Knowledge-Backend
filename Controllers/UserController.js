@@ -44,7 +44,7 @@ export const getStudentTutor = async (req, res) => {
   try {
     const tutor = await User.find({ role: "tutor" })
       .where("studentIds")
-      .find(req.user._id);
+      .find(req.user.student._id);
     if (!tutor) {
       res.status(404).json({
         message: "Tutor not found",

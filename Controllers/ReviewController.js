@@ -11,7 +11,7 @@ export const addReview = async (req, res) => {
     }
 
     const newReview = new Review({
-      student: req.user._id,
+      student: req.user.student._id,
       tutor: tutorId,
       rating,
       review,
