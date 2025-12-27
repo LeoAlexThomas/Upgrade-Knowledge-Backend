@@ -1,4 +1,5 @@
 import Tutor from "../Models/TutorSchema.js";
+import { addSlot } from "./SlotController.js";
 
 export const getAllTutors = async (req, res) => {
   try {
@@ -64,6 +65,13 @@ export const updateSlots = async (req, res) => {
       });
     }
 
+    const { slots } = req.body;
+    if (!slots || slots.length === 0) {
+      res.status(400).json({
+        message: "Slots are not found",
+      });
+    }
+
     const tutor = await Tutor.findById(tutorId).populate([
       "user",
       "students",
@@ -71,14 +79,21 @@ export const updateSlots = async (req, res) => {
       "payments",
       "lessons",
       "feedbacks",
+      "availableSlots",
     ]);
+
     if (!tutor) {
       res.status(404).json({
         message: "Tutor not found",
       });
     }
 
-    tutor.availableSlots = req.body.slots;
+    for (let index in slots) {
+      const slot = slots[index];
+      const newSlot = await addSlot(slot, tutorId);
+      tutor.availableSlots.push(newSlot._id);
+    }
+
     await tutor.save();
 
     res.status(200).json({
@@ -87,7 +102,9 @@ export const updateSlots = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: "Unable to update slots, Please try again later",
+      message: `Unable to update slots, Please try again later. ${
+        error.message || ""
+      }`,
     });
   }
 };

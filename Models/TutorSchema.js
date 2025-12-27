@@ -18,18 +18,8 @@ const TutorSchema = mongoose.Schema(
       default: [],
     },
     availableSlots: {
-      type: [
-        {
-          startDate: {
-            type: Date,
-            required: true,
-          },
-          endDate: {
-            type: Date,
-            required: true,
-          },
-        },
-      ],
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Slot",
       default: [],
       required: true,
     },
