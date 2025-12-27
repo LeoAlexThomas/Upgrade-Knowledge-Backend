@@ -10,6 +10,10 @@ const SlotSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    isAvailable: {
+      type: Boolean,
+      default: true,
+    },
     tutor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Tutor",
