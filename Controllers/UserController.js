@@ -59,3 +59,36 @@ export const getStudentTutor = async (req, res) => {
     });
   }
 };
+
+export const updateUser = async (req, res) => {
+  try {
+    const { name, email, profileImage } = req.body;
+
+    if (!name || !email || !profileImage) {
+      return res.status(400).json({
+        message: "All fields are required",
+      });
+    }
+
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      { name, email, profileImage },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+
+    res.status(200).json({
+      message: "User updated successfully",
+      data: updatedUser,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Unable to update user, Please try again later",
+    });
+  }
+};

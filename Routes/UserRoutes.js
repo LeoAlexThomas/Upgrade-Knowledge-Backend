@@ -9,6 +9,7 @@ import {
   getCurrentUser,
   getStudentTutor,
   getUsersWithStudentRole,
+  updateUser,
 } from "../Controllers/UserController.js";
 
 const router = express.Router();
@@ -22,5 +23,7 @@ router.get(
   getUsersWithStudentRole
 );
 router.get("/getTutor", authMiddleware, getStudentTutor);
+
+router.put("/updateUserInfo", authMiddleware, updateUser);
 
 export default router;
