@@ -5,8 +5,6 @@ import dotenv from "dotenv";
 import sendEmail from "../Utils/mailer.js";
 import Student from "../Models/StudentSchema.js";
 import Tutor from "../Models/TutorSchema.js";
-import { v4 as uuidv4 } from "uuid";
-import mongoose from "mongoose";
 
 dotenv.config();
 
@@ -27,7 +25,7 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    const token = await jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
 
@@ -49,10 +47,10 @@ export const loginUser = async (req, res) => {
 
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, profileImage, password, role } = req.body;
 
     // 1️⃣ Validate input
-    if (!name || !email || !password || !role) {
+    if (!name || !email || !profileImage || !password || !role) {
       return res.status(400).json({
         message: "All fields are required",
       });
@@ -73,6 +71,7 @@ export const registerUser = async (req, res) => {
     const newUser = await User.create({
       name,
       email,
+      profileImage,
       password: hashedPassword,
       role,
     });
@@ -219,7 +218,7 @@ export const resetPassword = async (req, res) => {
     const { password, token } = req.body;
 
     // Verifying user token which is sent with reset link
-    const decoded = await jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Getting user info based on decoded user id
     const user = await User.findById(decoded.userId);
