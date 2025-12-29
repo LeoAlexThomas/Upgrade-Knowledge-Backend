@@ -9,6 +9,7 @@ import LessonRoutes from "./Routes/LessonRoutes.js";
 import tutorRoutes from "./Routes/TutorRoutes.js";
 import ReviewRoutes from "./Routes/ReviewRoutes.js";
 import FeedbackRoutes from "./Routes/FeedbackRoutes.js";
+import skillRoutes from "./Routes/SkillRoutes.js";
 // Load environment variables from .env file
 dotenv.config();
 
@@ -46,6 +47,9 @@ app.use("/api/review", ReviewRoutes);
 
 // Feedback route
 app.use("/api/feedback", FeedbackRoutes);
+
+// Skill route
+app.use("/api/skill", skillRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
