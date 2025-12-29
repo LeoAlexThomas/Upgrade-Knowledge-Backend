@@ -13,6 +13,11 @@ const LessonSchema = mongoose.Schema(
     meetLink: {
       type: String,
     },
+    skills: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "Skill",
+      required: true,
+    },
     tutor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Tutor",

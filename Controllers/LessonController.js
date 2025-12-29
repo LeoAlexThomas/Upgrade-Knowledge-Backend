@@ -2,13 +2,20 @@ import Lesson from "../Models/LessonSchema.js";
 
 export const createLesson = async (req, res) => {
   try {
-    const { title, description, price, sessionStartDate, sessionEndDate } =
-      req.body;
+    const {
+      title,
+      description,
+      price,
+      skills,
+      sessionStartDate,
+      sessionEndDate,
+    } = req.body;
 
     if (
       !title ||
       !description ||
       !price ||
+      !skills ||
       !sessionStartDate ||
       !sessionEndDate
     ) {
@@ -24,6 +31,7 @@ export const createLesson = async (req, res) => {
       description,
       sessionStartDate,
       sessionEndDate,
+      skills,
       tutor: tutorId,
       price,
     });
@@ -76,13 +84,20 @@ export const getLessonCreatedByTutor = async (req, res) => {
 
 export const updateLesson = async (req, res) => {
   try {
-    const { title, description, price, sessionStartDate, sessionEndDate } =
-      req.body;
+    const {
+      title,
+      description,
+      price,
+      skills,
+      sessionStartDate,
+      sessionEndDate,
+    } = req.body;
 
     if (
       !title ||
       !description ||
       !price ||
+      !skills ||
       !sessionStartDate ||
       !sessionEndDate
     ) {
@@ -112,6 +127,7 @@ export const updateLesson = async (req, res) => {
     lesson.description = description;
     lesson.sessionStartDate = sessionStartDate;
     lesson.sessionEndDate = sessionEndDate;
+    lesson.skills = skills;
     lesson.price = price;
 
     await lesson.save();
