@@ -92,3 +92,25 @@ export const updateUser = async (req, res) => {
     });
   }
 };
+
+export const uploadImage = async (req, res) => {
+  try {
+    let imagePath = "";
+    if (!req.file || !req.file.path) {
+      return res.status(400).json({
+        message: "No file uploaded",
+      });
+    }
+    imagePath = req.file.path;
+    res.status(200).json({
+      message: "Image uploaded successfully",
+      data: {
+        uploadedUrl: imagePath,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Unable to update user, Please try again later",
+    });
+  }
+};

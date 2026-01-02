@@ -10,7 +10,9 @@ import {
   getStudentTutor,
   getUsersWithStudentRole,
   updateUser,
+  uploadImage,
 } from "../Controllers/UserController.js";
+import upload from "../Config/Multer.js";
 
 const router = express.Router();
 
@@ -23,6 +25,13 @@ router.get(
   getUsersWithStudentRole
 );
 router.get("/getTutor", authMiddleware, getStudentTutor);
+
+router.put(
+  "/updateProfileImage",
+  authMiddleware,
+  upload.single("file"),
+  uploadImage
+);
 
 router.put("/updateUserInfo", authMiddleware, updateUser);
 
