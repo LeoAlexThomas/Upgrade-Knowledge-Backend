@@ -10,6 +10,7 @@ import {
   getStudentTutor,
   getUsersWithStudentRole,
   updateUser,
+  updateUserBio,
   uploadImage,
 } from "../Controllers/UserController.js";
 import upload from "../Config/Multer.js";
@@ -32,6 +33,8 @@ router.put(
   upload.single("file"),
   uploadImage
 );
+
+router.put("/updateBio", authMiddleware, updateUserBio);
 
 router.put("/updateUserInfo", authMiddleware, updateUser);
 

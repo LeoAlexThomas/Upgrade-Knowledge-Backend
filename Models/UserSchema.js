@@ -15,6 +15,10 @@ const UserSchema = mongoose.Schema(
       type: String,
       default: null,
     },
+    bio: {
+      type: String,
+      default: null,
+    },
     password: {
       type: String,
       required: true,

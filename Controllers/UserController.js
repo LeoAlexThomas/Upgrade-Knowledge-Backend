@@ -93,6 +93,35 @@ export const updateUser = async (req, res) => {
   }
 };
 
+export const updateUserBio = async (req, res) => {
+  try {
+    const { bio } = req.body;
+    if (!bio) {
+      return res.status(400).json({
+        message: "Bio is required",
+      });
+    }
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: req.user._id },
+      { bio },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
+    res.status(200).json({
+      message: "User bio updated successfully",
+      data: updatedUser,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Unable to update user bio, Please try again later",
+    });
+  }
+};
+
 export const uploadImage = async (req, res) => {
   try {
     let imagePath = "";
